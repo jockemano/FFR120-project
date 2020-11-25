@@ -5,8 +5,9 @@ classdef Bug
         latticesize {mustBeNumeric}
         latticenum {mustBeNumeric}
         age {mustBeNumeric}
-
-
+        egg {mustBeNumeric}
+        
+        
     end
     methods
         function obj = Bug(row,col,lat)
@@ -21,16 +22,16 @@ classdef Bug
             r = rand;
             if (r < validStandard)
                 moveDirection = randi(4);
-                if moveDirection == 1
+                if moveDirection == 1 && obj.row > 1
                     obj.row = obj.row - 1;
                     obj.col = obj.col;
-                elseif moveDirection == 2
+                elseif moveDirection == 2 && obj.row < obj.latticesize
                     obj.row = obj.row + 1;
                     obj.col = obj.col;
-                elseif moveDirection == 3
+                elseif moveDirection == 3 && obj.col > 1
                     obj.col = obj.col - 1;
                     obj.row = obj.row;
-                elseif moveDirection == 4
+                elseif moveDirection == 4 && obj.col < obj.latticesize
                     obj.col = obj.col + 1;
                     obj.row = obj.row;
                 else
@@ -42,7 +43,7 @@ classdef Bug
                 obj.col = obj.col;
             end
         end
-
+        
         function obj = grow(obj)
             
             obj.age = obj.age + 1;
@@ -51,6 +52,10 @@ classdef Bug
         function obj = die(obj)
             obj.row = NaN;
             obj.col = NaN;
+        end
+        
+        function obj = reproduce(obj)
+            obj.egg = randi(3);
         end
     end
 end
